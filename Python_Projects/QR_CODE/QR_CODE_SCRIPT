@@ -1,0 +1,54 @@
+import qrcode
+from PIL import Image
+import discord
+import os
+
+# Function to generate QR code
+def generate_qr_code(data, file_name="qr_code.png"):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=20,
+        border=2
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    img.save(file_name)
+    return file_name
+
+# Discord bot setup
+intents = discord.Intents.default()
+intents.messages = True
+client = discord.Client(intents=intents)
+
+TOKEN = "MTI1NDYxMDQyMDkwNDIzNTE3OQ.G3mTkN.yuudkYITFiKNMMHxYC9qPPt8uKZWTXgQUzPUCI"
+CHANNEL_ID = 1101566021921427666  # Replace with your channel ID
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return  # Ignore messages sent by the bot itself
+
+    # Check if the message contains any content (ignoring empty messages)
+    if message.content:
+        # Generate QR code based on the message content
+        file_name = generate_qr_code(message.content)
+
+        # Find the channel to send the QR code
+        channel = client.get_channel(CHANNEL_ID)
+        
+        if channel:
+            await channel.send(file=discord.File(file_name))
+            print("QR code sent successfully!")
+            # Clean up the generated file
+            os.remove(file_name)
+        else:
+            print(f"Failed to find channel with ID: {CHANNEL_ID}")
+
+client.run(TOKEN)
