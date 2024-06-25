@@ -92,7 +92,7 @@ class DataFetcher:
                 "Last year vs. last 5 years trend change (%)": trend_change,
                 "Trendiness": trendiness
         }
-        self.kwDf = self.kwDf.append(new_row, ignore_index=True)
+        self.kwDf = pd.concat([self.kwDf, pd.DataFrame([new_row])], ignore_index=True)
     
     def processAllKeywords(self):
         for keyword in self.keywords:
