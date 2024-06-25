@@ -1,6 +1,4 @@
-from fetch_data import fetch_keyword_data
-from sort_and_rank import sort_and_rank
-from save_to_csv import save_to_csv
+from helperFunctions import fetch_keyword_data, sort_and_rank, save_to_csv
 
 def main():
     # List of all keywords
