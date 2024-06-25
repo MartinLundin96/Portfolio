@@ -96,7 +96,10 @@ class DataFetcher:
     def processAllKeywords(self):
         for keyword in self.keywords:
             self.processKeyword(keyword)
-            
+
+    def saveToCSV(self, filename):
+        self.kwDf.to_csv(filename, index=False)
+        
     @staticmethod        
     def sort_and_rank(keyword_data):
         sorted_keyword_data = sorted(keyword_data, key=lambda x: x["Last year vs. last 5 years trend change (%)"], reverse=True)
