@@ -1,0 +1,12 @@
+class Gachiman:
+    def __init__(self, gachi_level, cock_girth, cock_length, slogan):
+        self.gachi_level = gachi_level
+        self.cock_girth = cock_girth
+        self.cock_length = cock_length
+        self.slogan = slogan
+
+user = Gachiman(10, 12, 5, "Ow, my shoulder")
+
+print(user.slogan)
+
+
