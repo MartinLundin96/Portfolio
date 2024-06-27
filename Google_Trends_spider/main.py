@@ -1,8 +1,7 @@
-from helperFunctions import fetch_keyword_data, sort_and_rank, save_to_csv
+from helperFunctions import DataFetcher
+import pandas as pd
 
-def main():
-    # List of all keywords
-    all_keywords =[
+all_keywords =[
     "Labrador Retriever",
     "German Shepherd",
     "Golden Retriever",
@@ -16,15 +15,13 @@ def main():
     "Shih Tzu",
     "Siberian Husky"
 ]
+timeframes = ["today 5-y", "today 12-m", "today 3-m", "today 1-m"]
 
-    # Fetch data
-    keyword_data = fetch_keyword_data(all_keywords)
+def main():
+    dataFetcher = DataFetcher(all_keywords, timeframes)
+    dataFetcher.processAllKeywords()
+    dataFetcher.saveToCsv("google_trends_data.csv")
 
-    # Sort and rank data
-    sorted_keyword_data = sort_and_rank(keyword_data)
-
-    # Save to CSV
-    save_to_csv(sorted_keyword_data, "google_trends_data.csv")
 
 if __name__ == "__main__":
     main()
